@@ -1,0 +1,25 @@
+{
+  "name": "request-log-viewer",
+  "version": "0.0.1",
+  "description": "Mini app to see the http request log of a website.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js --ignore views",
+    "lint": "npx prettier index.js views/* --write"
+  },
+  "author": "Philipp Hutterer",
+  "license": "MIT",
+  "dependencies": {
+    "chrome-har-capturer": "^0.13.10",
+    "chrome-launcher": "^0.15.1",
+    "compression": "^1.7.4",
+    "debounce": "^1.2.1",
+    "express": "^4.18.1",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@prettier/plugin-pug": "^2.1.1",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
+  }
+}

@@ -1,0 +1,83 @@
+doctype html
+html.m-0(lang="en")
+  head
+    meta(charset="utf-8")
+    |
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    |
+    link(
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css",
+      rel="stylesheet",
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor",
+      crossorigin="anonymous"
+    )
+    style.
+      details[open] {
+        background: white;
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        padding: 16px;
+        overflow: auto;
+      }
+      details > summary > span::after {
+        content: "Show";
+      }
+      details[open] > summary > span::after {
+        content: "Close";
+      }
+    script.
+      function setDownloadContent(a) {
+        if (!a.href?.startsWith("blob:")) {
+          a.href = window.URL.createObjectURL(new Blob([a.nextElementSibling.textContent]));
+        }
+      }
+  body
+    table.table.table-striped.p-3
+      thead
+        tr
+          th Method
+          th URL
+          th Status
+          th Type
+          th Size
+          th Req-Headers
+          th Req-Body
+          th Res-Headers
+          th Res-Body
+      tbody.table-group-divider
+        each e in data
+          tr
+            - var rq = e.request;
+            - var rp = e.response;
+            td #{ rq.method }
+            td.font-monospace #{ rq.url }
+            td #{ rp.status }
+            td #{ rp.content.mimeType }
+            td #{ rp.content.size }
+            -
+              var list = [
+                {text: rq.headers, toJson: true},
+                {text: rq.postData?.text, toJson: false},
+                {text: rp.headers, toJson: true},
+                {text: rp.content?.text, toJson: false}
+              ]
+            each exp in list 
+              td
+                if exp.text
+                  details
+                    summary.btn.btn-primary.btn-sm
+                      span
+                    a.btn.btn-primary.btn-sm.ms-2(
+                      download="",
+                      type=exp.toJson ? "application/json" : rp.content.mimeType,
+                      onclick="setDownloadContent(this)"
+                    ) Download
+                    noscript.text-warning.fst-italic.ms-2 Download not working without JS.
+                    .font-monospace.mt-3
+                      if exp.toJson
+                        span !{ JSON.stringify(exp.text) }
+                      else
+                        span #{ exp.text }
