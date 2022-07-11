@@ -31,7 +31,9 @@ html.m-0(lang="en")
     script.
       function setDownloadContent(a) {
         if (!a.href?.startsWith("blob:")) {
-          a.href = window.URL.createObjectURL(new Blob([a.nextElementSibling.textContent]));
+          a.href = window.URL.createObjectURL(
+            new Blob([a.nextElementSibling.nextElementSibling.textContent])
+          );
         }
       }
   body
