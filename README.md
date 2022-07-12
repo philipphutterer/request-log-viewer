@@ -11,7 +11,7 @@ capable of running a chromium instance.
 
 ## Installation
 
-```console
+```sh
 git clone https://github.com/philipphutterer/request-log-viewer
 cd request-log-viewer
 npm install
@@ -21,13 +21,24 @@ npm install
 
 Start the [express](http://expressjs.com/) server
 
-```console
+```sh
 npm start
 ```
 
 Linting can be done using
 
-```console
+```sh
 npm run lint
 ```
 
+## TODO
+
+- content view
+  - syntax highlighting
+  - collapse, expand (`json`, `html`, `xml`, `yaml`)
+  - pretty print (`js`)
+  - preview / render (`html`, `markdown`, `image`, `video`, `audio`)
+  - query testing (e.g. `jq`, `css-selectors`, `xpath`) &rightarrow; shell command formulation (`curl`)
+- query history, keep contents in `.har` file &rightarrow; download contents via unique id
+- production considerations (for express server)
+- pattern recognition in request stream (e.g. api keys, cookies, headers, other tokens, ...)
